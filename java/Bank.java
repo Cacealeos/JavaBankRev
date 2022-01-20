@@ -1,6 +1,7 @@
 
 
 import java.text.DecimalFormat;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static java.lang.Double.parseDouble;
@@ -185,6 +186,11 @@ public class Bank {
             case 1: //Deposits
                 System.out.print("Enter dollar amount:");
                 amount = input.nextLine();
+                if(parseDouble(amount)<=0) {
+                    System.out.println("Invalid amount. Use positive numbers only.");
+                    viewAccount(login, selected, input, ID);
+                    return;
+                }
                 formattedInput = decimalFormat.format(parseDouble(amount));
                 selected.setBalance(selected.getBalance() + parseDouble(formattedInput));
                 System.out.println("Processed");
@@ -198,6 +204,12 @@ public class Bank {
             case 2: //Withdraws
                 System.out.print("Enter dollar amount:");
                 amount = input.nextLine();
+                if(parseDouble(amount)<=0) {
+                    System.out.println("Invalid amount. Use positive numbers only.");
+                    viewAccount(login, selected, input, ID);
+                    return;
+                }
+
                 formattedInput = decimalFormat.format(parseDouble(amount));
                 if(selected.getBalance() < parseDouble(formattedInput))
                     System.out.println("Insufficient funds.");
@@ -237,39 +249,45 @@ public class Bank {
 
     public static void dashBoard (User login, Scanner input) {
 
-        System.out.println("Please select a function(1-5):\n" +
-                "#1: View Accounts\n" +
-                "#2: Make Account\n" +
-                "#3: Share Account\n" +
-                "#4: Change login\n" +
-                "#5: Log out\n");
+        try {
+            System.out.println("Please select a function(1-5):\n" +
+                    "#1: View Accounts\n" +
+                    "#2: Make Account\n" +
+                    "#3: Share Account\n" +
+                    "#4: Change login\n" +
+                    "#5: Log out\n");
 
-        int action = input.nextInt();
-        input.nextLine();
+            int action = input.nextInt();
+            input.nextLine();
 
-        switch (action) {
-            case 1:
-                login.setAccounts(PGC.getAccounts(login.getUserID()));
-                displayAccounts(login, input);
-                dashBoard(login, input);
-                break;
-            case 2:
-                createAccount(login, input);
-                dashBoard(login, input);
-                break;
-            case 3:
-                System.out.println("Not available...");
-                dashBoard(login, input);
-            case 4:
-                System.out.println("Not available...");
-                dashBoard(login, input);
-                break;
-            case 5:
+            switch (action) {
+                case 1:
+                    login.setAccounts(PGC.getAccounts(login.getUserID()));
+                    displayAccounts(login, input);
+                    dashBoard(login, input);
+                    break;
+                case 2:
+                    createAccount(login, input);
+                    dashBoard(login, input);
+                    break;
+                case 3:
+                    System.out.println("Not available...");
+                    dashBoard(login, input);
+                case 4:
+                    System.out.println("Not available...");
+                    dashBoard(login, input);
+                    break;
+                case 5:
 
-                break;
-            default:
-                System.out.println("Please choose a valid option...");
-                dashBoard(login, input);
+                    break;
+                default:
+                    System.out.println("Please choose a valid option...");
+                    dashBoard(login, input);
+            }
+        } catch (InputMismatchException e)
+        {
+            input.nextLine();
+            dashBoard(login, input);
         }
     }
 

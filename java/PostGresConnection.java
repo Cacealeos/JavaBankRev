@@ -12,7 +12,12 @@ public class PostGresConnection {
     //props.load(new FileReader"");
 
 
-
+    private static final String endpoint = "revaturedb.cefq4dtr6ufo.us-east-1.rds.amazonaws.com";
+    ///jdbc:postgresql://<endpoint>/<database>
+    //private static final String url = "jdbc:postgresql://localhost:5432/JavaBank";
+    private static final String url = "jdbc:postgresql://" + endpoint + "/JavaBankAWS";
+    private static final String user = "postgres";
+    private static final String passwd = "Generation0";
 
     private static java.sql.Connection conn;
 
