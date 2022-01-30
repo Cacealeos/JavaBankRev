@@ -16,8 +16,8 @@ public class PostGresConnection {
     ///jdbc:postgresql://<endpoint>/<database>
     //private static final String url = "jdbc:postgresql://localhost:5432/JavaBank";
     private static final String url = "jdbc:postgresql://" + endpoint + "/JavaBankAWS";
-    private static final String user = "postgres";
-    private static final String passwd = "Generation0";
+    private static final String user = "";
+    private static final String passwd = "";
 
     private static java.sql.Connection conn;
 
